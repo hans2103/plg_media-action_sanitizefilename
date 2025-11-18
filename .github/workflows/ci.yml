@@ -19,12 +19,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils
+
       - name: Validate XML manifest
         run: |
-          if ! xmllint --noout sanitizefilename.xml 2>/dev/null; then
-            echo "Error: Invalid XML in sanitizefilename.xml"
-            exit 1
-          fi
+          xmllint --noout sanitizefilename.xml
           echo "✓ XML manifest is valid"
 
       - name: Check PHP syntax
