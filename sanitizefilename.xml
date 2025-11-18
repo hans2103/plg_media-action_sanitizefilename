@@ -40,6 +40,20 @@
 				</field>
 
 				<field
+					name="replacement_char"
+					type="list"
+					label="PLG_MEDIA-ACTION_SANITIZEFILENAME_REPLACEMENT_CHAR_LABEL"
+					description="PLG_MEDIA-ACTION_SANITIZEFILENAME_REPLACEMENT_CHAR_DESC"
+					default="-"
+					showon="replace_spaces:1"
+				>
+					<option value="-">PLG_MEDIA-ACTION_SANITIZEFILENAME_REPLACEMENT_HYPHEN</option>
+					<option value="_">PLG_MEDIA-ACTION_SANITIZEFILENAME_REPLACEMENT_UNDERSCORE</option>
+					<option value=".">PLG_MEDIA-ACTION_SANITIZEFILENAME_REPLACEMENT_DOT</option>
+					<option value="">PLG_MEDIA-ACTION_SANITIZEFILENAME_REPLACEMENT_NONE</option>
+				</field>
+
+				<field
 					name="lowercase"
 					type="radio"
 					label="PLG_MEDIA-ACTION_SANITIZEFILENAME_LOWERCASE_LABEL"

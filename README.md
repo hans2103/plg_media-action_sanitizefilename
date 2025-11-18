@@ -1,14 +1,16 @@
 # Media Action - Sanitize Filename
 
-A Joomla 4/5 media-action plugin that automatically sanitizes uploaded filenames by replacing spaces with hyphens, converting to lowercase, and removing special characters.
+A Joomla 4/5/6 media-action plugin that automatically sanitizes uploaded filenames by replacing spaces with your choice of character, converting to lowercase, and removing special characters.
 
 ## Features
 
-- **Replace Spaces**: Automatically replaces spaces and underscores with hyphens
+- **Replace Spaces**: Automatically replaces spaces and underscores
+- **Configurable Replacement Character**: Choose between hyphen (-), underscore (_), dot (.), or remove spaces entirely
+- **PHP 8.1+ ENUM Support**: Type-safe replacement character selection using modern PHP enums
 - **Lowercase Conversion**: Converts all characters to lowercase for consistency
-- **Remove Special Characters**: Strips special characters, keeping only alphanumeric, hyphens, and underscores
-- **Smart Cleanup**: Removes consecutive hyphens and trims hyphens from start/end
-- **Configurable**: All features can be toggled on/off individually
+- **Remove Special Characters**: Strips special characters, keeping only alphanumeric characters and chosen separators
+- **Smart Cleanup**: Removes consecutive replacement characters and trims them from start/end
+- **Fully Configurable**: All features can be toggled on/off individually
 
 ## Installation
 
@@ -31,18 +33,37 @@ A Joomla 4/5 media-action plugin that automatically sanitizes uploaded filenames
 
 After installation, configure the plugin at **System → Plugins → Media Action - Sanitize Filename**:
 
-- **Replace Spaces**: Replace spaces and underscores with hyphens (default: enabled)
+- **Replace Spaces**: Enable/disable space replacement (default: enabled)
+- **Replacement Character**: Choose hyphen (-), underscore (_), dot (.), or none (default: hyphen)
 - **Convert to Lowercase**: Convert filename to lowercase (default: enabled)
 - **Remove Special Characters**: Remove special characters (default: enabled)
 
 ## Examples
 
+### With Hyphen (default)
 | Original Filename | Sanitized Filename |
 |------------------|-------------------|
 | `My Holiday Photo 2025.jpg` | `my-holiday-photo-2025.jpg` |
 | `Product_Image #1.png` | `product-image-1.png` |
 | `Screenshot (2025-11-18).png` | `screenshot-2025-11-18.png` |
-| `Café Menu Card.pdf` | `caf-menu-card.pdf` |
+
+### With Underscore
+| Original Filename | Sanitized Filename |
+|------------------|-------------------|
+| `My Holiday Photo 2025.jpg` | `my_holiday_photo_2025.jpg` |
+| `Product-Image #1.png` | `product_image_1.png` |
+
+### With Dot
+| Original Filename | Sanitized Filename |
+|------------------|-------------------|
+| `My Holiday Photo 2025.jpg` | `my.holiday.photo.2025.jpg` |
+| `Product_Image #1.png` | `product.image.1.png` |
+
+### No Replacement
+| Original Filename | Sanitized Filename |
+|------------------|-------------------|
+| `My Holiday Photo 2025.jpg` | `myholidayphoto2025.jpg` |
+| `Product_Image #1.png` | `productimage1.png` |
 
 ## Requirements
 

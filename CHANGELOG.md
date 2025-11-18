@@ -9,7 +9,15 @@ and this project adheres to `YY.WW.PATCH` versioning (Year.Week.Patch).
 
 ## [25.47.1] - 2025-11-18
 
+### Added
+- **ENUM support**: Added `ReplacementChar` enum for type-safe character replacement options
+- **Configurable replacement character**: Users can now choose between hyphen (-), underscore (_), dot (.), or no replacement
+- **Enhanced flexibility**: Replacement character field shows only when "Replace Spaces" is enabled
+
 ### Changed
+- Improved code quality with PHP 8.1+ enum implementation
+- Updated regex pattern to preserve dots in filenames
+- Enhanced sanitization logic to handle different replacement characters dynamically
 - Updated to strict comparison operator (`!==` instead of `!=`) for better type safety
 - Changed `or die` to `|| die` to follow Joomla coding standards
 - Improved code quality for Joomla 6 and PHP 8.3+ compatibility

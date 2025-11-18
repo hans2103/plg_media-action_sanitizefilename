@@ -13,6 +13,7 @@ namespace Joomla\Plugin\MediaAction\Sanitizefilename\Extension;
 use Joomla\CMS\Event\Model\BeforeSaveEvent;
 use Joomla\Component\Media\Administrator\Plugin\MediaActionPlugin;
 use Joomla\Event\SubscriberInterface;
+use Joomla\Plugin\MediaAction\Sanitizefilename\Enum\ReplacementChar;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') || die;
@@ -89,18 +90,25 @@ final class Sanitizefilename extends MediaActionPlugin implements SubscriberInte
 	 */
 	private function sanitizeFilename(string $filename): string
 	{
-		$replaceSpaces  = (bool) $this->params->get('replace_spaces', 1);
-		$lowercase      = (bool) $this->params->get('lowercase', 1);
-		$removeSpecial  = (bool) $this->params->get('remove_special', 1);
+		$replaceSpaces     = (bool) $this->params->get('replace_spaces', 1);
+		$replacementChar   = $this->params->get('replacement_char', '-');
+		$lowercase         = (bool) $this->params->get('lowercase', 1);
+		$removeSpecial     = (bool) $this->params->get('remove_special', 1);
 
-		// Replace spaces with hyphens
+		// Get replacement character enum
+		$replacement = ReplacementChar::tryFromValue($replacementChar) ?? ReplacementChar::HYPHEN;
+		$replaceWith = $replacement->getValue();
+
+		// Replace spaces and underscores with chosen character
 		if ($replaceSpaces) {
-			$filename = str_replace([' ', '_'], '-', $filename);
+			$filename = str_replace([' ', '_'], $replaceWith, $filename);
 		}
 
-		// Remove special characters (keep only alphanumeric, hyphens, and underscores)
+		// Remove special characters (keep only alphanumeric, hyphens, underscores, and dots)
 		if ($removeSpecial) {
-			$filename = preg_replace('/[^A-Za-z0-9\-_]/', '', $filename);
+			// Build regex pattern to keep alphanumeric and the replacement character
+			$keepChars = 'A-Za-z0-9\-_\.';
+			$filename = preg_replace('/[^' . $keepChars . ']/', '', $filename);
 		}
 
 		// Convert to lowercase
@@ -108,11 +116,14 @@ final class Sanitizefilename extends MediaActionPlugin implements SubscriberInte
 			$filename = strtolower($filename);
 		}
 
-		// Remove multiple consecutive hyphens
-		$filename = preg_replace('/-+/', '-', $filename);
+		// Remove multiple consecutive replacement characters (if not empty)
+		if ($replaceWith !== '') {
+			$pattern = '/' . preg_quote($replaceWith, '/') . '+/';
+			$filename = preg_replace($pattern, $replaceWith, $filename);
 
-		// Trim hyphens from start and end
-		$filename = trim($filename, '-');
+			// Trim replacement character from start and end
+			$filename = trim($filename, $replaceWith);
+		}
 
 		return $filename;
 	}
