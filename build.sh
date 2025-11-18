@@ -12,7 +12,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Get plugin version from XML file
-VERSION=$(grep -oP '(?<=<version>)[^<]+' sanitizefilename.xml)
+VERSION=$(grep -o '<version>[^<]*' sanitizefilename.xml | sed 's/<version>//')
 PLUGIN_NAME="plg_media-action_sanitizefilename"
 ZIP_NAME="${PLUGIN_NAME}.zip"
 
