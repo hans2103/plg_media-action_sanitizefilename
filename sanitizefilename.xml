@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 3; see LICENSE.txt</license>
 	<authorEmail>info@hkweb.nl</authorEmail>
 	<authorUrl>https://hkweb.nl</authorUrl>
-	<version>25.11.00</version>
+	<version>25.47.0</version>
 	<description>PLG_MEDIA-ACTION_SANITIZEFILENAME_XML_DESCRIPTION</description>
 	<namespace path="src">Joomla\Plugin\MediaAction\Sanitizefilename</namespace>
 	<files>

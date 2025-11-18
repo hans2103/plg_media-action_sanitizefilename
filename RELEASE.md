@@ -4,15 +4,15 @@ This document describes how to create a new release of the plugin.
 
 ## Version Format
 
-The plugin uses `YY.MM.NN` versioning:
+The plugin uses `YY.WW.PATCH` versioning:
 - `YY`: Last two digits of the year (e.g., 25 for 2025)
-- `MM`: Month (01-12, zero-padded)
-- `NN`: Incremental patch number (00, 01, 02, etc., zero-padded)
+- `WW`: ISO week number (01-53)
+- `PATCH`: Incremental patch number (0, 1, 2, etc.)
 
 Examples:
-- `25.11.00` - First release in November 2025
-- `25.11.01` - First patch in November 2025
-- `25.12.00` - First release in December 2025
+- `25.47.0` - First release in week 47 of 2025
+- `25.47.1` - First patch in week 47 of 2025
+- `25.48.0` - First release in week 48 of 2025
 
 ## Creating a Release
 
@@ -21,7 +21,7 @@ Examples:
 Before creating a release, update the `CHANGELOG.md` file:
 
 ```markdown
-## [25.11.01] - 2025-11-20
+## [25.47.1] - 2025-11-20
 
 ### Added
 - New feature description
@@ -37,20 +37,20 @@ Before creating a release, update the `CHANGELOG.md` file:
 
 ```bash
 git add CHANGELOG.md
-git commit -m "Prepare for release 25.11.01"
+git commit -m "Prepare for release 25.47.1"
 git push origin main
 ```
 
 ### 3. Create and Push Tag
 
-The GitHub Actions workflow is triggered by pushing a tag in the `YY.MM.NN` format:
+The GitHub Actions workflow is triggered by pushing a tag in the `YY.WW.PATCH` format:
 
 ```bash
 # Create a tag
-git tag 25.11.01
+git tag 25.47.1
 
 # Push the tag to GitHub
-git push origin 25.11.01
+git push origin 25.47.1
 ```
 
 ### 4. Automatic Release Process
@@ -62,14 +62,14 @@ Once you push the tag, GitHub Actions will automatically:
 3. ✓ Run the build script to create the zip package
 4. ✓ Extract the changelog for this version
 5. ✓ Create a GitHub Release with:
-   - Release name: "Release YY.MM.NN"
+   - Release name: "Release YY.WW.PATCH"
    - Release notes from CHANGELOG.md
    - Attached zip file for download
 6. ✓ Upload the build artifact (kept for 90 days)
 
 ### 5. Verify Release
 
-1. Go to https://github.com/yourusername/plg_media-action_sanitizefilename/releases
+1. Go to https://github.com/hans2103/plg_media-action_sanitizefilename/releases
 2. Verify the release was created correctly
 3. Download the zip file and test it
 
@@ -88,8 +88,8 @@ Once you push the tag, GitHub Actions will automatically:
 
 ```bash
 # Add remote
-cd ~/Development/plg_media-action_sanitizefilename
-git remote add origin git@github.com:yourusername/plg_media-action_sanitizefilename.git
+cd ~/Development/other/plg_media-action_sanitizefilename
+git remote add origin git@github.com:hans2103/plg_media-action_sanitizefilename.git
 
 # Rename branch to main (if needed)
 git branch -M main
@@ -102,8 +102,8 @@ git push -u origin main
 
 ```bash
 # Create and push the first tag
-git tag 25.11.00
-git push origin 25.11.00
+git tag 25.47.0
+git push origin 25.47.0
 ```
 
 The GitHub Actions workflow will automatically create the release!
@@ -113,7 +113,7 @@ The GitHub Actions workflow will automatically create the release!
 If you want to build the package locally without creating a release:
 
 ```bash
-cd ~/Development/plg_media-action_sanitizefilename
+cd ~/Development/other/plg_media-action_sanitizefilename
 ./build.sh
 ```
 
@@ -149,9 +149,9 @@ git add .
 git commit -m "Fix critical issue"
 git checkout main
 git merge hotfix/critical-fix
-git tag 25.11.01
+git tag 25.47.1
 git push origin main
-git push origin 25.11.01
+git push origin 25.47.1
 ```
 
 ## Troubleshooting
@@ -159,7 +159,7 @@ git push origin 25.11.01
 ### Release workflow fails
 
 - Check the Actions tab on GitHub for error logs
-- Ensure tag format is correct: `YY.MM.NN`
+- Ensure tag format is correct: `YY.WW.PATCH`
 - Verify all required files exist
 - Check that CHANGELOG.md has an entry for the version
 

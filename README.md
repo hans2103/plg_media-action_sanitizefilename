@@ -52,12 +52,15 @@ After installation, configure the plugin at **System → Plugins → Media Actio
 
 ## Versioning
 
-This plugin uses `YY.MM.PATCHNUMBER` versioning:
+This plugin uses `YY.WW.PATCH` versioning:
 - `YY`: Last two digits of the year (e.g., 25 for 2025)
-- `MM`: Month (01-12)
-- `PATCHNUMBER`: Incremental patch number (00, 01, 02, etc.)
+- `WW`: ISO week number (01-53)
+- `PATCH`: Incremental patch number (0, 1, 2, etc.)
 
-Example: `25.11.00` = First release in November 2025
+Examples:
+- `25.47.0` = First release in week 47 of 2025
+- `25.47.1` = First patch in week 47 of 2025
+- `25.48.0` = First release in week 48 of 2025
 
 ## Changelog
 
@@ -69,7 +72,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and changes.
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/plg_media-action_sanitizefilename.git
+git clone https://github.com/hans2103/plg_media-action_sanitizefilename.git
 cd plg_media-action_sanitizefilename
 
 # Build the package

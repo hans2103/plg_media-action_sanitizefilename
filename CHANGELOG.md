@@ -3,11 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to `YY.MM.PATCHNUMBER` versioning.
+and this project adheres to `YY.WW.PATCH` versioning (Year.Week.Patch).
 
 ## [Unreleased]
 
-## [25.11.00] - 2025-11-18
+## [25.47.0] - 2025-11-18
 
 ### Added
 - Initial release of the Sanitize Filename plugin
@@ -37,5 +37,5 @@ and this project adheres to `YY.MM.PATCHNUMBER` versioning.
 ### Security
 - Nothing
 
-[Unreleased]: https://github.com/yourusername/plg_media-action_sanitizefilename/compare/25.11.00...HEAD
-[25.11.00]: https://github.com/yourusername/plg_media-action_sanitizefilename/releases/tag/25.11.00
+[Unreleased]: https://github.com/hans2103/plg_media-action_sanitizefilename/compare/25.47.0...HEAD
+[25.47.0]: https://github.com/hans2103/plg_media-action_sanitizefilename/releases/tag/25.47.0
