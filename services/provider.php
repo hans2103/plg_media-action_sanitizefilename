@@ -8,7 +8,7 @@
  * @license     GNU General Public License version 3; see LICENSE.txt
  */
 
-\defined('_JEXEC') or die;
+\defined('_JEXEC') || die;
 
 use Joomla\CMS\Extension\PluginInterface;
 use Joomla\CMS\Factory;

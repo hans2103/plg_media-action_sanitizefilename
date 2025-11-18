@@ -15,7 +15,7 @@ use Joomla\Component\Media\Administrator\Plugin\MediaActionPlugin;
 use Joomla\Event\SubscriberInterface;
 
 // phpcs:disable PSR1.Files.SideEffects
-\defined('_JEXEC') or die;
+\defined('_JEXEC') || die;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
@@ -55,7 +55,7 @@ final class Sanitizefilename extends MediaActionPlugin implements SubscriberInte
 		$item    = $event->getItem();
 
 		// Only process media files
-		if ($context != 'com_media.file') {
+		if ($context !== 'com_media.file') {
 			return;
 		}
 
