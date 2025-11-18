@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  validate:
+    name: Validate Plugin
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate XML manifest
+        run: |
+          if ! xmllint --noout sanitizefilename.xml 2>/dev/null; then
+            echo "Error: Invalid XML in sanitizefilename.xml"
+            exit 1
+          fi
+          echo "✓ XML manifest is valid"
+
+      - name: Check PHP syntax
+        run: |
+          find . -name "*.php" -print0 | xargs -0 -n1 php -l
+          echo "✓ PHP syntax is valid"
+
+      - name: Validate language files
+        run: |
+          # Check that all language files exist
+          for lang in en-GB nl-NL; do
+            if [ ! -f "language/${lang}/plg_media-action_sanitizefilename.ini" ]; then
+              echo "Error: Missing language/${lang}/plg_media-action_sanitizefilename.ini"
+              exit 1
+            fi
+            if [ ! -f "language/${lang}/plg_media-action_sanitizefilename.sys.ini" ]; then
+              echo "Error: Missing language/${lang}/plg_media-action_sanitizefilename.sys.ini"
+              exit 1
+            fi
+          done
+          echo "✓ All language files exist"
+
+      - name: Test build script
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+          # Verify the zip was created
+          if [ ! -f "plg_media-action_sanitizefilename.zip" ]; then
+            echo "Error: Build script did not create zip file"
+            exit 1
+          fi
+          echo "✓ Build script works correctly"
+
+      - name: Verify package contents
+        run: |
+          # List contents of zip
+          unzip -l plg_media-action_sanitizefilename.zip
+
+          # Verify required files are in the zip
+          required_files=(
+            "sanitizefilename.xml"
+            "services/provider.php"
+            "src/Extension/Sanitizefilename.php"
+          )
+
+          for file in "${required_files[@]}"; do
+            if ! unzip -l plg_media-action_sanitizefilename.zip | grep -q "$file"; then
+              echo "Error: Required file $file not found in package"
+              exit 1
+            fi
+          done
+          echo "✓ Package contains all required files"

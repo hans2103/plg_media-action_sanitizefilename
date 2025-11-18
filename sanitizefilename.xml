@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="media-action" method="upgrade">
+	<name>plg_media-action_sanitizefilename</name>
+	<author>HKweb</author>
+	<creationDate>November 2025</creationDate>
+	<copyright>Copyright (C) 2025 HKweb</copyright>
+	<license>GNU General Public License version 3; see LICENSE.txt</license>
+	<authorEmail>info@hkweb.nl</authorEmail>
+	<authorUrl>https://hkweb.nl</authorUrl>
+	<version>25.11.00</version>
+	<description>PLG_MEDIA-ACTION_SANITIZEFILENAME_XML_DESCRIPTION</description>
+	<namespace path="src">Joomla\Plugin\MediaAction\Sanitizefilename</namespace>
+	<files>
+		<folder plugin="sanitizefilename">services</folder>
+		<folder>src</folder>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/plg_media-action_sanitizefilename.ini</language>
+		<language tag="en-GB">language/en-GB/plg_media-action_sanitizefilename.sys.ini</language>
+		<language tag="nl-NL">language/nl-NL/plg_media-action_sanitizefilename.ini</language>
+		<language tag="nl-NL">language/nl-NL/plg_media-action_sanitizefilename.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset
+				name="basic"
+				label="PLG_MEDIA-ACTION_SANITIZEFILENAME_FIELDSET_LABEL"
+				description="PLG_MEDIA-ACTION_SANITIZEFILENAME_FIELDSET_DESC"
+			>
+				<field
+					name="replace_spaces"
+					type="radio"
+					label="PLG_MEDIA-ACTION_SANITIZEFILENAME_REPLACE_SPACES_LABEL"
+					description="PLG_MEDIA-ACTION_SANITIZEFILENAME_REPLACE_SPACES_DESC"
+					default="1"
+					layout="joomla.form.field.radio.switcher"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field
+					name="lowercase"
+					type="radio"
+					label="PLG_MEDIA-ACTION_SANITIZEFILENAME_LOWERCASE_LABEL"
+					description="PLG_MEDIA-ACTION_SANITIZEFILENAME_LOWERCASE_DESC"
+					default="1"
+					layout="joomla.form.field.radio.switcher"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field
+					name="remove_special"
+					type="radio"
+					label="PLG_MEDIA-ACTION_SANITIZEFILENAME_REMOVE_SPECIAL_LABEL"
+					description="PLG_MEDIA-ACTION_SANITIZEFILENAME_REMOVE_SPECIAL_DESC"
+					default="1"
+					layout="joomla.form.field.radio.switcher"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
