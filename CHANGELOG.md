@@ -7,6 +7,16 @@ and this project adheres to `YY.WW.PATCH` versioning (Year.Week.Patch).
 
 ## [Unreleased]
 
+## [25.47.2] - 2025-11-19
+
+### Fixed
+- Deployed ENUM support and replacement character field to production installation
+- Verified plugin configuration interface displays all fields correctly
+- Confirmed replacement character field appears dynamically with `showon` attribute
+
+### Changed
+- Cleared Joomla cache to ensure updated plugin configuration is recognized
+
 ## [25.47.1] - 2025-11-18
 
 ### Added
@@ -52,6 +62,7 @@ and this project adheres to `YY.WW.PATCH` versioning (Year.Week.Patch).
 ### Security
 - Nothing
 
-[Unreleased]: https://github.com/hans2103/plg_media-action_sanitizefilename/compare/25.47.1...HEAD
+[Unreleased]: https://github.com/hans2103/plg_media-action_sanitizefilename/compare/25.47.2...HEAD
+[25.47.2]: https://github.com/hans2103/plg_media-action_sanitizefilename/compare/25.47.1...25.47.2
 [25.47.1]: https://github.com/hans2103/plg_media-action_sanitizefilename/compare/25.47.0...25.47.1
 [25.47.0]: https://github.com/hans2103/plg_media-action_sanitizefilename/releases/tag/25.47.0
