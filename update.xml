@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updates>
+    <update>
+        <name>Media Action - Sanitize Filename</name>
+        <description>Media Manager plugin that sanitizes uploaded filenames (Joomla 4, 5 and 6)</description>
+        <element>sanitizefilename</element>
+        <type>plugin</type>
+        <folder>media-action</folder>
+        <client>site</client>
+        <version>26.45.0</version>
+        <infourl title="Media Action - Sanitize Filename">https://github.com/hans2103/plg_media-action_sanitizefilename</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/hans2103/plg_media-action_sanitizefilename/releases/download/26.45.0/plg_media-action_sanitizefilename-26.45.0.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>HKweb</maintainer>
+        <maintainerurl>https://hkweb.nl</maintainerurl>
+        <targetplatform name="joomla" version="[456]\..*"/>
+        <php_minimum>8.1.0</php_minimum>
+    </update>
+</updates>
