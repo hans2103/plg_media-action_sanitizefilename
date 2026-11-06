@@ -36,33 +36,37 @@ jobs:
         run: |
           chmod +x build.sh
           ./build.sh
+          mv plg_media-action_sanitizefilename.zip plg_media-action_sanitizefilename-${{ steps.get_version.outputs.VERSION }}.zip
 
-      - name: Extract changelog for this version
-        id: changelog
+      - name: Generate release notes
         run: |
           VERSION="${{ steps.get_version.outputs.VERSION }}"
 
-          # Extract changelog section for this version
-          awk "/## \[${VERSION}\]/,/## \[/" CHANGELOG.md | sed '1d;$d' > /tmp/release_notes.md
+          # Extract the section for this tag from CHANGELOG.md into a separate file
+          awk "/^## \[${VERSION}\]/{found=1; next} /^## \[/{if(found) exit} found{print}" CHANGELOG.md > release_notes.md
 
-          # If no changelog found, create a default message
-          if [ ! -s /tmp/release_notes.md ]; then
-            echo "Release ${VERSION}" > /tmp/release_notes.md
-            echo "" >> /tmp/release_notes.md
-            echo "See [CHANGELOG.md](CHANGELOG.md) for details." >> /tmp/release_notes.md
+          # If no changelog section was found, fall back to a default message
+          if [ ! -s release_notes.md ]; then
+            echo "Release ${VERSION}" > release_notes.md
+            echo "" >> release_notes.md
+            echo "See [CHANGELOG.md](CHANGELOG.md) for details." >> release_notes.md
           fi
 
-          # Output for use in release
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
-          cat /tmp/release_notes.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "" >> release_notes.md
+          echo "## Installation" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "1. Download the \`plg_media-action_sanitizefilename-${VERSION}.zip\` file below" >> release_notes.md
+          echo "2. In Joomla administrator, go to System → Install → Extensions" >> release_notes.md
+          echo "3. Upload and install the package" >> release_notes.md
+          echo "4. Enable the plugin in System → Plugins" >> release_notes.md
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
           name: Release ${{ steps.get_version.outputs.VERSION }}
-          body: ${{ steps.changelog.outputs.RELEASE_NOTES }}
-          files: plg_media-action_sanitizefilename.zip
+          body_path: release_notes.md
+          files: plg_media-action_sanitizefilename-${{ steps.get_version.outputs.VERSION }}.zip
           draft: false
           prerelease: false
         env:
@@ -72,5 +76,32 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: plg_media-action_sanitizefilename-${{ steps.get_version.outputs.VERSION }}
-          path: plg_media-action_sanitizefilename.zip
+          path: plg_media-action_sanitizefilename-${{ steps.get_version.outputs.VERSION }}.zip
           retention-days: 90
+
+      - name: Checkout main branch
+        run: |
+          git checkout -- sanitizefilename.xml
+          git fetch origin main
+          git checkout main
+
+      - name: Update manifest version and update.xml
+        run: |
+          VERSION="${{ steps.get_version.outputs.VERSION }}"
+
+          # Keep the manifest version on main in sync with the release
+          sed -i "s|<version>.*</version>|<version>${VERSION}</version>|" sanitizefilename.xml
+
+          # Update version number (first occurrence only, so old entries are not overwritten)
+          sed -i "0,/<version>/s|<version>.*</version>|<version>${VERSION}</version>|" update.xml
+
+          # Update download URL (first occurrence only, preserve .zip extension)
+          sed -i "0,/downloadurl/s|releases/download/[^/]*/plg_media-action_sanitizefilename-[^<]*|releases/download/${VERSION}/plg_media-action_sanitizefilename-${VERSION}.zip|" update.xml
+
+      - name: Commit and push update.xml
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add update.xml sanitizefilename.xml
+          git commit -m "Update update.xml for version ${{ steps.get_version.outputs.VERSION }}" || echo "No changes to commit"
+          git push origin main || echo "No changes to push"
