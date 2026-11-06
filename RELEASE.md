@@ -18,7 +18,7 @@ Examples:
 
 ### 1. Update CHANGELOG.md
 
-Before creating a release, update the `CHANGELOG.md` file:
+Before creating a release, add a section for the new version to `CHANGELOG.md`. The release notes on GitHub are taken from this section, so the heading must match the tag exactly:
 
 ```markdown
 ## [25.47.1] - 2025-11-20
@@ -59,54 +59,29 @@ Once you push the tag, GitHub Actions will automatically:
 
 1. ✓ Validate the version format
 2. ✓ Update the version in `sanitizefilename.xml`
-3. ✓ Run the build script to create the zip package
-4. ✓ Extract the changelog for this version
+3. ✓ Run the build script and name the zip `plg_media-action_sanitizefilename-<version>.zip`
+4. ✓ Extract the changelog section for this version
 5. ✓ Create a GitHub Release with:
    - Release name: "Release YY.WW.PATCH"
    - Release notes from CHANGELOG.md
    - Attached zip file for download
 6. ✓ Upload the build artifact (kept for 90 days)
+7. ✓ Update `update.xml` and the manifest version on `main`, so installed sites see the new version through Joomla's update system
 
 ### 5. Verify Release
 
 1. Go to https://github.com/hans2103/plg_media-action_sanitizefilename/releases
 2. Verify the release was created correctly
 3. Download the zip file and test it
+4. Check that `update.xml` on `main` points to the new version
 
-## GitHub Repository Setup
+## Update Server
 
-### 1. Create GitHub Repository
+The manifest contains an `<updateservers>` entry that points to `update.xml` on the `main` branch:
 
-1. Go to https://github.com/new
-2. Repository name: `plg_media-action_sanitizefilename`
-3. Description: "Joomla media-action plugin to sanitize filenames"
-4. Choose: Public or Private
-5. Do NOT initialize with README (we already have one)
-6. Click "Create repository"
+`https://raw.githubusercontent.com/hans2103/plg_media-action_sanitizefilename/main/update.xml`
 
-### 2. Push to GitHub
-
-```bash
-# Add remote
-cd ~/Development/other/plg_media-action_sanitizefilename
-git remote add origin git@github.com:hans2103/plg_media-action_sanitizefilename.git
-
-# Rename branch to main (if needed)
-git branch -M main
-
-# Push to GitHub
-git push -u origin main
-```
-
-### 3. Create First Release
-
-```bash
-# Create and push the first tag
-git tag 25.47.0
-git push origin 25.47.0
-```
-
-The GitHub Actions workflow will automatically create the release!
+The release workflow keeps this file in sync. Do not edit the version or download URL by hand.
 
 ## Manual Build (for testing)
 
@@ -171,4 +146,4 @@ git push origin 25.47.1
 
 ### Version mismatch
 
-The GitHub Actions workflow automatically updates the version in `sanitizefilename.xml` to match the tag, so you don't need to update it manually before creating a release.
+The GitHub Actions workflow updates the version in `sanitizefilename.xml` to match the tag, both for the package and on `main` after the release, so you don't need to update it manually.

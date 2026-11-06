@@ -7,6 +7,26 @@ and this project adheres to `YY.WW.PATCH` versioning (Year.Week.Patch).
 
 ## [Unreleased]
 
+## [26.45.0] - 2026-11-06
+
+### Added
+- **Transliterate to ASCII** option: converts non-Latin scripts (Cyrillic, Arabic, ...) to ASCII before sanitizing, using the PHP intl extension with a fallback to the Joomla language transliteration
+- Fallback basename (`file-xxxxxxxx`) when nothing usable is left after sanitizing
+- Update server: `update.xml` and an `<updateservers>` entry in the manifest, so installed sites get updates through Joomla
+- `php_minimum` (8.1.0) in the manifest
+
+### Changed
+- **Remove Special Characters** now keeps letters, marks and numbers of any script instead of ASCII only
+- Lowercase conversion uses `mb_strtolower()` so non-ASCII letters are handled correctly
+- Manifest name uses the language constant `PLG_MEDIA-ACTION_SANITIZEFILENAME`
+- Release package is named `plg_media-action_sanitizefilename-<version>.zip`
+- Release workflow updates `update.xml` and the manifest version on `main` after a release
+- Added `declare(strict_types=1)`
+
+### Fixed
+- Non-Latin filenames (for example Cyrillic, Arabic, Japanese) are no longer reduced to an empty name, see [joomla/joomla-cms#45531](https://github.com/joomla/joomla-cms/issues/45531)
+- Release notes are now taken from this changelog instead of always using the default text
+
 ## [25.47.2] - 2025-11-19
 
 ### Fixed
@@ -62,7 +82,8 @@ and this project adheres to `YY.WW.PATCH` versioning (Year.Week.Patch).
 ### Security
 - Nothing
 
-[Unreleased]: https://github.com/hans2103/plg_media-action_sanitizefilename/compare/25.47.2...HEAD
+[Unreleased]: https://github.com/hans2103/plg_media-action_sanitizefilename/compare/26.45.0...HEAD
+[26.45.0]: https://github.com/hans2103/plg_media-action_sanitizefilename/compare/25.47.2...26.45.0
 [25.47.2]: https://github.com/hans2103/plg_media-action_sanitizefilename/compare/25.47.1...25.47.2
 [25.47.1]: https://github.com/hans2103/plg_media-action_sanitizefilename/compare/25.47.0...25.47.1
 [25.47.0]: https://github.com/hans2103/plg_media-action_sanitizefilename/releases/tag/25.47.0

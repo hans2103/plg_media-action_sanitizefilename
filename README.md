@@ -1,6 +1,6 @@
 # Media Action - Sanitize Filename
 
-A Joomla 4/5/6 media-action plugin that automatically sanitizes uploaded filenames by replacing spaces with your choice of character, converting to lowercase, and removing special characters.
+A Joomla 4/5/6 media-action plugin that automatically sanitizes uploaded filenames by replacing spaces with your choice of character, converting to lowercase, and removing special characters. Letters of any script are preserved, with optional transliteration to ASCII.
 
 ## Features
 
@@ -8,7 +8,10 @@ A Joomla 4/5/6 media-action plugin that automatically sanitizes uploaded filenam
 - **Configurable Replacement Character**: Choose between hyphen (-), underscore (_), dot (.), or remove spaces entirely
 - **PHP 8.1+ ENUM Support**: Type-safe replacement character selection using modern PHP enums
 - **Lowercase Conversion**: Converts all characters to lowercase for consistency
-- **Remove Special Characters**: Strips special characters, keeping only alphanumeric characters and chosen separators
+- **Remove Special Characters**: Strips special characters, keeping letters, marks and numbers of any script plus the chosen separators
+- **Unicode Friendly**: Cyrillic, Arabic, CJK and other scripts are preserved by default
+- **Optional Transliteration**: Convert non-Latin characters to ASCII (uses PHP intl when available)
+- **Fallback Name**: Never ends up with an empty filename
 - **Smart Cleanup**: Removes consecutive replacement characters and trims them from start/end
 - **Fully Configurable**: All features can be toggled on/off individually
 
@@ -16,10 +19,12 @@ A Joomla 4/5/6 media-action plugin that automatically sanitizes uploaded filenam
 
 ### Method 1: Download from Releases
 
-1. Download the latest `plg_media-action_sanitizefilename.zip` from the [Releases](../../releases) page
+1. Download the latest `plg_media-action_sanitizefilename-<version>.zip` from the [Releases](../../releases) page
 2. Go to **System → Install → Extensions** in your Joomla administrator
 3. Upload the zip file
 4. Enable the plugin at **System → Plugins → Media Action - Sanitize Filename**
+
+After the first installation of version 26.45.0 or later, updates are delivered through Joomla's update system.
 
 ### Method 2: Discover Installation
 
@@ -36,7 +41,8 @@ After installation, configure the plugin at **System → Plugins → Media Actio
 - **Replace Spaces**: Enable/disable space replacement (default: enabled)
 - **Replacement Character**: Choose hyphen (-), underscore (_), dot (.), or none (default: hyphen)
 - **Convert to Lowercase**: Convert filename to lowercase (default: enabled)
-- **Remove Special Characters**: Remove special characters (default: enabled)
+- **Remove Special Characters**: Remove special characters, keeping letters, marks and numbers of any script (default: enabled)
+- **Transliterate to ASCII**: Convert non-Latin characters to ASCII before sanitizing (default: disabled)
 
 ## Examples
 
@@ -65,11 +71,17 @@ After installation, configure the plugin at **System → Plugins → Media Actio
 | `My Holiday Photo 2025.jpg` | `myholidayphoto2025.jpg` |
 | `Product_Image #1.png` | `productimage1.png` |
 
+### Non-Latin Scripts
+| Original Filename | Transliterate off (default) | Transliterate on |
+|------------------|-------------------|-------------------|
+| `Запрос Файл.png` | `запрос-файл.png` | `zapros-fajl.png` |
+| `Café Zoë.jpg` | `café-zoë.jpg` | `cafe-zoe.jpg` |
+
 ## Requirements
 
-- Joomla 4.0 or higher
-- Joomla 5.0 or higher
+- Joomla 4.0, 5.0 or 6.0 or higher
 - PHP 8.1 or higher
+- PHP intl extension (optional, for transliteration)
 
 ## Versioning
 
@@ -100,13 +112,14 @@ cd plg_media-action_sanitizefilename
 ./build.sh
 ```
 
-The build script will create `plg_media-action_sanitizefilename.zip` in the root directory.
+The build script will create `plg_media-action_sanitizefilename.zip` in the root directory. Release builds are named `plg_media-action_sanitizefilename-<version>.zip` by the release workflow.
 
 ### Directory Structure
 
 ```
 plg_media-action_sanitizefilename/
 ├── sanitizefilename.xml                    # Plugin manifest
+├── update.xml                              # Joomla update server
 ├── services/
 │   └── provider.php                        # Service provider
 ├── src/

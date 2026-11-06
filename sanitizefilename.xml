@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="plugin" group="media-action" method="upgrade">
-	<name>plg_media-action_sanitizefilename</name>
+	<name>PLG_MEDIA-ACTION_SANITIZEFILENAME</name>
 	<author>HKweb</author>
 	<creationDate>November 2025</creationDate>
 	<copyright>Copyright (C) 2025 HKweb</copyright>
 	<license>GNU General Public License version 3; see LICENSE.txt</license>
 	<authorEmail>info@hkweb.nl</authorEmail>
 	<authorUrl>https://hkweb.nl</authorUrl>
-	<version>25.47.2</version>
+	<version>26.45.0</version>
 	<description>PLG_MEDIA-ACTION_SANITIZEFILENAME_XML_DESCRIPTION</description>
+
+	<php_minimum>8.1.0</php_minimum>
+
 	<namespace path="src">Joomla\Plugin\MediaAction\Sanitizefilename</namespace>
 	<files>
 		<folder plugin="sanitizefilename">services</folder>
@@ -76,7 +79,23 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
+
+				<field
+					name="transliterate"
+					type="radio"
+					label="PLG_MEDIA-ACTION_SANITIZEFILENAME_TRANSLITERATE_LABEL"
+					description="PLG_MEDIA-ACTION_SANITIZEFILENAME_TRANSLITERATE_DESC"
+					default="0"
+					layout="joomla.form.field.radio.switcher"
+				>
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 			</fieldset>
 		</fields>
 	</config>
+
+	<updateservers>
+		<server type="extension" name="Sanitize Filename Update Server">https://raw.githubusercontent.com/hans2103/plg_media-action_sanitizefilename/main/update.xml</server>
+	</updateservers>
 </extension>
